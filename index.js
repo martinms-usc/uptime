@@ -5,20 +5,11 @@ const StringDecoder = require("string_decoder").StringDecoder;
 const PORT = 3001;
 
 const server = http.createServer((req, res) => {
-  // get url and parse it
   let parsedUrl = url.parse(req.url, true);
-
-  // get the path
   let path = parsedUrl.pathname;
   let trimmedPath = path.replace(/^\/+|\/+$/g, '');
-
-  // get the query string
   let queryString = parsedUrl.query;
-
-  // get http method
   let method = req.method.toLowerCase();
-
-  // headers
   let headers = req.headers;
 
   // payload
@@ -64,7 +55,7 @@ server.listen(PORT, () => {
 const handlers = {}
 
 handlers.sample = (data, callback) => {
-  callback(406, { name: 'sample handler' });
+  callback(201, { name: 'sample handler' });
 };
 
 handlers.notFound = (data, callback) => {
