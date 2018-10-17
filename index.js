@@ -6,28 +6,25 @@ const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 const PORT = config.httpPort;
 const HTTPS_PORT = config.httpsPort;
+const _data = require('./lib/data');
 
 // instantiate http server
 const httpServer = http.createServer((req, res) => {
   unifiedServer(req, res);
 });
-
-// start server
+// start http server
 httpServer.listen(PORT, () => {
   console.log(`[${config.envName.toUpperCase()}] server is listening on port: ${PORT}`);
 });
-
 
 // instantiate https server
 const httpsServerOpts = {
   key: fs.readFileSync('./https/key.pem'),
   cert: fs.readFileSync('./https/cert.pem')
 };
-
 const httpsServer = https.createServer(httpsServerOpts, (req, res) => {
   unifiedServer(req, res);
 });
-
 // start https server
 httpsServer.listen(HTTPS_PORT, () => {
   console.log(`[${config.envName.toUpperCase()}] server is listening on port: ${HTTPS_PORT}`);
@@ -78,15 +75,15 @@ const unifiedServer = function (req, res) {
 // handlers
 const handlers = {}
 
-handlers.sample = (data, callback) => {
-  callback(201, { name: 'sample handler' });
-};
-
 handlers.notFound = (data, callback) => {
   callback(404, { error: 'route' });
 };
 
+handlers.ping = (data, callback) => {
+  callback(200);
+};
+
 // router
 const router = {
-  sample: handlers.sample
+  ping: handlers.ping
 };
