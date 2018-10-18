@@ -3,10 +3,11 @@ const https = require("https");
 const url = require("url");
 const fs = require("fs");
 const StringDecoder = require("string_decoder").StringDecoder;
-const config = require("./config");
+const config = require("./lib/config");
 const PORT = config.httpPort;
 const HTTPS_PORT = config.httpsPort;
-const _data = require('./lib/data');
+const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
 
 // instantiate http server
 const httpServer = http.createServer((req, res) => {
@@ -41,14 +42,14 @@ const unifiedServer = function (req, res) {
 
   // payload
   let decoder = new StringDecoder('utf-8');
-  let payload = '';
+  let payloadBuffer = '';
 
   req.on('data', data => {
-    payload += decoder.write(data);
+    payloadBuffer += decoder.write(data);
   });
   
   req.on('end', () => {
-    payload += decoder.end();
+    payloadBuffer += decoder.end();
 
     // choose handler
     let handler = typeof router[trimmedPath] !== 'undefined' ? router[trimmedPath] : handlers.notFound;
@@ -56,7 +57,8 @@ const unifiedServer = function (req, res) {
       trimmedPath,
       queryString,
       headers,
-      payload
+      method,
+      payload: helpers.parseJsonToObject(payloadBuffer)
     };
 
     // route request
@@ -66,24 +68,13 @@ const unifiedServer = function (req, res) {
       res.writeHead(statusCode);
       res.end(payloadString);
     
-      console.log('request returned with ', statusCode, payloadString);
+      console.log('request returned with', statusCode, payloadString);
     });
   });
 };
 
-
-// handlers
-const handlers = {}
-
-handlers.notFound = (data, callback) => {
-  callback(404, { error: 'route' });
-};
-
-handlers.ping = (data, callback) => {
-  callback(200);
-};
-
 // router
 const router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  users: handlers.users
 };
