@@ -48,7 +48,7 @@ const unifiedServer = function (req, res) {
     payloadBuffer += decoder.write(data);
   });
   
-  req.on('end', () => {
+  req.on('end', async () => {
     payloadBuffer += decoder.end();
 
     // choose handler
@@ -62,19 +62,18 @@ const unifiedServer = function (req, res) {
     };
 
     // route request
-    handler(data, (statusCode = 200, payload = {}) => {
-      let payloadString = JSON.stringify(payload);
-      res.setHeader('Content-Type', 'application/json' );
-      res.writeHead(statusCode);
-      res.end(payloadString);
-    
-      console.log('request returned with', statusCode, payloadString);
-    });
+    let [statusCode = 200, payload = {}] = await handler(data);
+    res.setHeader('Content-Type', 'application/json');
+    res.writeHead(statusCode);
+    res.end(JSON.stringify(payload));
+
+    console.log('request returned with', statusCode, payload);
   });
 };
 
 // router
 const router = {
   ping: handlers.ping,
-  users: handlers.users
+  users: handlers.users,
+  tokens: handlers.tokens
 };
