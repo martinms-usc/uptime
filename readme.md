@@ -1,6 +1,6 @@
 Uptime monitoring app with text alerts via Twilio
 
-###This Project
+###This Project###
 The reasoning behind this project was twofold:
 1. I wanted to build a sample program in raw Node.js without the use of ANY server framework (Express, Hapi, etc.) and without the use of ANY third-party npm modules. As such you will see there is no `package.json` or `node_modules` in the project directory. Everything is built with core Node modules.
 2. I also wanted to build it in a way that does not use callbacks. Yes, a Node API without callbacks (for the most part). The API, handlers, and internal libs to manipulate data are all constructed with Promises and heavy use of async/await syntax. I wanted to see how far this approach could get me and how much the readability/maintainability of a raw Node.js project could be improved by eliminating 'callback hell'.
