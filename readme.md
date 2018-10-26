@@ -1,4 +1,4 @@
-Uptime monitoring app with text alerts via Twilio
+Uptime monitoring with text alerts via Twilio in raw Node.js with async/await
 
 ### This Project
 The reasoning behind this project was twofold:

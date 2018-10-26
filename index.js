@@ -1,13 +1,13 @@
-const http = require("http");
-const https = require("https");
-const url = require("url");
-const fs = require("fs");
-const StringDecoder = require("string_decoder").StringDecoder;
-const config = require("./lib/config");
-const PORT = config.httpPort;
-const HTTPS_PORT = config.httpsPort;
-const handlers = require("./lib/handlers");
-const helpers = require("./lib/helpers");
+const http              = require("http");
+const https             = require("https");
+const url               = require("url");
+const fs                = require("fs");
+const StringDecoder     = require("string_decoder").StringDecoder;
+const config            = require("./lib/config");
+const handlers          = require("./lib/handlers");
+const helpers           = require("./lib/helpers");
+const PORT              = config.httpPort;
+const HTTPS_PORT        = config.httpsPort;
 
 // instantiate http server
 const httpServer = http.createServer((req, res) => {
@@ -15,7 +15,7 @@ const httpServer = http.createServer((req, res) => {
 });
 // start http server
 httpServer.listen(PORT, () => {
-  console.log(`[${config.envName.toUpperCase()}] server is listening on port: ${PORT}`);
+  console.log(`[${config.envName.toUpperCase()}] http server is listening on port: ${PORT}`);
 });
 
 // instantiate https server
@@ -28,7 +28,7 @@ const httpsServer = https.createServer(httpsServerOpts, (req, res) => {
 });
 // start https server
 httpsServer.listen(HTTPS_PORT, () => {
-  console.log(`[${config.envName.toUpperCase()}] server is listening on port: ${HTTPS_PORT}`);
+  console.log(`[${config.envName.toUpperCase()}] https server is listening on port: ${HTTPS_PORT}`);
 });
 
 
