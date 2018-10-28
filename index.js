@@ -15,7 +15,7 @@ const httpServer = http.createServer((req, res) => {
 });
 // start http server
 httpServer.listen(PORT, () => {
-  console.log(`[${config.envName.toUpperCase()}] http server is listening on port: ${PORT}`);
+  console.log(`[${config.envName.toUpperCase()}] http  server is listening on port: ${PORT}`);
 });
 
 // instantiate https server
@@ -75,5 +75,6 @@ const unifiedServer = function (req, res) {
 const router = {
   ping: handlers.ping,
   users: handlers.users,
-  tokens: handlers.tokens
+  tokens: handlers.tokens,
+  checks: handlers.checks
 };
