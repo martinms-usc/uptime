@@ -1,5 +1,5 @@
 ## Uptime monitoring 
-##### In raw Node.js & async/await with text alerts via Twilio
+##### In raw Node.js with async/await and text alerts via Twilio
 
 ### This Project
 The reasoning behind this project was twofold:
