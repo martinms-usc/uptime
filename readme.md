@@ -86,7 +86,7 @@ data, err := db.Query("SELECT ...")
 if err != nil { return err }
 ```
 
-To aid in this, I used a small utility function called `to` that receives a promise and resolves the response to an array in the structure `[rejectedError, resolvedData]`, echoing the Node convention of error-first callbacks. This was an attempt at getting myself more accustomed to functions returning multiple values as in Go, but more importantly in dealing with errors as soon as they are encountered.
+To aid in this, I used a small utility function called `to` that receives a promise and resolves the response to an array in the structure `[rejectedError, resolvedData]`, echoing the Node convention of error-first callbacks. The primary benefit is in not having to wrap any `await` calls in a try/catch block. This was also an attempt at getting myself more accustomed to functions returning multiple values as in Go, and probably more importantly in dealing with errors as soon as they are encountered.
 
 Using async/await and `to`:
 ```javascript
